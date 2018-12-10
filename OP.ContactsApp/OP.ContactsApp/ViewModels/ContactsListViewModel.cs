@@ -18,10 +18,10 @@ namespace OP.ContactsApp.ViewModels
         public bool IsBusy { get; set; }
         public bool IsInitiailized { get; set; }
         public string SearchValue { get; set; }
-        public IEnumerable<OPContact> AContacts { get; set; }
+        public IEnumerable<OPContact> Contacts { get; set; }
 
         private IEnumerable<OPContact> allContacts;
-        public IEnumerable<OPContact> AllContacts { get => allContacts; set => AContacts = value; }        
+        public IEnumerable<OPContact> AllContacts { get => allContacts; set { allContacts = value; Contacts = value; } }
 
         public ICommand ContactSelectedCommand { get; private set; }
         public ICommand SearchCommand { get; private set; }
@@ -46,11 +46,11 @@ namespace OP.ContactsApp.ViewModels
 
         public async Task Initialize()
         {
-            if (AllContacts != null && AllContacts.Any()) AllContacts = SortContacts(AllContacts);
+            if (AllContacts != null && AllContacts.Any()) Contacts = SortFilterContacts(AllContacts);
             if (IsInitiailized) return;
             IsBusy = true;
             var contacts = await _contactService.GetContactsAsync();
-            AllContacts = SortContacts(contacts);
+            AllContacts = SortFilterContacts(contacts);
             IsBusy = false;
             IsInitiailized = true;
         }
@@ -62,12 +62,19 @@ namespace OP.ContactsApp.ViewModels
             _navigationService.OpenModal<ContactDetailViewModel>();
         }
 
-        private IEnumerable<OPContact> SortContacts(IEnumerable<OPContact> contacts)
-            => contacts.Where(contact => contact.Name.Contains(SearchValue)).OrderByDescending(contact => contact.Favorite).ThenBy(contact => contact.Name).ToList();
+        private IEnumerable<OPContact> SortFilterContacts(IEnumerable<OPContact> contacts)
+            => contacts.Where(contact =>
+            {
+                if (!string.IsNullOrEmpty(SearchValue))
+                    return contact.Name.Contains(SearchValue, StringComparison.CurrentCultureIgnoreCase);
+                else
+                    return true;
+            }).OrderByDescending(contact => contact.Favorite).ThenBy(contact => contact.Name).ToList();
 
         private void OnSearch(string searchValue)
         {
-            var s = 0;
+            SearchValue = searchValue;
+            Contacts = SortFilterContacts(AllContacts);
         }
     }
 }
