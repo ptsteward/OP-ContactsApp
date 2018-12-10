@@ -1,6 +1,4 @@
 ﻿using OP.ContactsApp.Common;
-using System;
-using System.Linq;
 
 namespace OP.ContactsApp.Services
 {

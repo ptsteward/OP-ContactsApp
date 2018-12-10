@@ -1,12 +1,9 @@
 ﻿using OP.ContactsApp.Common;
 using OP.ContactsApp.Models;
 using OP.ContactsApp.Services;
-using Plugin.ContactService;
-using Plugin.ContactService.Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;

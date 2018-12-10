@@ -1,10 +1,8 @@
 ﻿using OP.ContactsApp.Models;
 using Plugin.ContactService;
-using Plugin.ContactService.Shared;
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OP.ContactsApp.Services
