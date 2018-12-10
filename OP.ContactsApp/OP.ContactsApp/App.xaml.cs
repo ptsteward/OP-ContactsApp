@@ -1,4 +1,5 @@
-﻿using OP.ContactsApp.Views;
+﻿using OP.ContactsApp.Services;
+using OP.ContactsApp.Views;
 using Plugin.ContactService;
 using SimpleInjector;
 using System;
@@ -23,7 +24,9 @@ namespace OP.ContactsApp
 
         private void ConfigurContainer(Container container)
         {
-            container.Register<IContactService>(() => CrossContactService.Current);
+            container.Register<INavigationService, NavigationService>();
+            container.RegisterSingleton(() => CrossContactService.Current);            
+            container.RegisterSingleton<IOPContactService, OPContactService>();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using OP.ContactsApp.Common;
+using OP.ContactsApp.Services;
 using Plugin.ContactService;
 using Plugin.ContactService.Shared;
 using System;
@@ -6,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace OP.ContactsApp.ViewModels
 {
@@ -14,18 +17,31 @@ namespace OP.ContactsApp.ViewModels
         public IEnumerable<Contact> Contacts { get; set; }
         public bool IsBusy { get; set; }
 
-        private IContactService _contactService;
+        public ICommand ContactSelectedCommand { get; private set; }
 
-        public ContactsListViewModel(IContactService contactService)
+        private IOPContactService _contactService;
+        private INavigationService _navigationService;
+
+        public ContactsListViewModel(IOPContactService contactService, INavigationService navigationService)
         {
-            _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));            
+            _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            ContactSelectedCommand = new Command<ItemTappedEventArgs>(OnContactSelected);
         }
 
         public async Task Initialize()
         {
             IsBusy = true;
-            Contacts = await _contactService.GetContactListAsync();
+            Contacts = await _contactService.GetContactsAsync();
+            Contacts = Contacts.OrderBy(contact => contact.Name);
             IsBusy = false;
+        }
+
+        private void OnContactSelected(ItemTappedEventArgs e)
+        {
+            var contact = e.Item as Contact;
+            _contactService.SelectedContact = contact;
+            _navigationService.OpenModal<ContactDetailViewModel>();
         }
     }
 }
