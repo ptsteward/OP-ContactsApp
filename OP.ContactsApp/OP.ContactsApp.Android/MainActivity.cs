@@ -6,6 +6,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Android;
+using Android.Support.V4.App;
 
 namespace OP.ContactsApp.Droid
 {
@@ -20,6 +22,14 @@ namespace OP.ContactsApp.Droid
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            ActivityCompat.RequestPermissions(this, new string[] {
+                Manifest.Permission.ReadContacts,
+            }, 0);
         }
     }
 }

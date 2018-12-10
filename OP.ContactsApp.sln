@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OP.ContactsApp.iOS", "OP.Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OP.ContactsApp", "OP.ContactsApp\OP.ContactsApp\OP.ContactsApp.csproj", "{470A27F7-DB10-4D68-B6AA-C889A2B08F1A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "platforms", "platforms", "{97C08C31-E913-4895-8B1F-750E49A09A2D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cross-platform", "cross-platform", "{7CBEDDC5-400C-412F-A8BD-841637374099}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU
@@ -136,6 +140,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{62307B9C-CC76-405D-9579-9C171508C2CD} = {97C08C31-E913-4895-8B1F-750E49A09A2D}
+		{5CDACC10-F3D4-4338-B499-FBF255AFEE20} = {97C08C31-E913-4895-8B1F-750E49A09A2D}
+		{470A27F7-DB10-4D68-B6AA-C889A2B08F1A} = {7CBEDDC5-400C-412F-A8BD-841637374099}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AD33D949-E994-411E-A5BA-F9B14A13B363}

@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace OP.ContactsApp
+namespace OP.ContactsApp.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class ContentsListView : ContentPage
     {
-        public MainPage()
+        public ContentsListView()
         {
             InitializeComponent();
         }
