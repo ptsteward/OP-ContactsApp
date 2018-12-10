@@ -19,7 +19,7 @@ namespace OP.ContactsApp
             _container = new Container();
             ConfigurContainer(_container);
             var mainPage = _container.GetInstance<ContactsListView>();
-            MainPage = mainPage;
+            MainPage = new NavigationPage(mainPage);
         }
 
         private void ConfigurContainer(Container container)

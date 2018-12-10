@@ -4,7 +4,8 @@
              xmlns:local="clr-namespace:OP.ContactsApp"
              xmlns:common="clr-namespace:OP.ContactsApp.Common"
              x:Class="OP.ContactsApp.Views.ContactsListView"
-             Appearing="ContentPage_Appearing">
+             Appearing="ContentPage_Appearing"
+             Title="Contacts">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -27,6 +28,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}"/>
+        <ActivityIndicator Grid.Row="1" Color="CornflowerBlue" IsRunning="{Binding IsBusy}"/>
     </Grid>
 </ContentPage>

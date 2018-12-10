@@ -21,7 +21,7 @@ namespace OP.ContactsApp.Services
             var type = GetViewType<TViewModel>();
             Device.BeginInvokeOnMainThread(async () =>
             {
-                await App.Current.MainPage.Navigation.PushModalAsync(_container.GetInstance(type) as Page, false);
+                await App.Current.MainPage.Navigation.PushAsync(_container.GetInstance(type) as Page, false);
             });
         }
 
@@ -34,6 +34,6 @@ namespace OP.ContactsApp.Services
         }
 
         private Type GetViewType<TViewModel>()
-            => typeof(TViewModel).Assembly.GetType(typeof(TViewModel).FullName.TrimEnd("Model".ToArray()));
+            => typeof(TViewModel).Assembly.GetType(typeof(TViewModel).FullName.Replace("Model",""));
     }
 }

@@ -16,6 +16,7 @@ namespace OP.ContactsApp.ViewModels
     {
         public IEnumerable<Contact> Contacts { get; set; }
         public bool IsBusy { get; set; }
+        public bool IsInitiailized { get; set; }
 
         public ICommand ContactSelectedCommand { get; private set; }
 
@@ -31,10 +32,12 @@ namespace OP.ContactsApp.ViewModels
 
         public async Task Initialize()
         {
-            IsBusy = true;
+            if (IsInitiailized) return;
+            IsBusy = true;            
             Contacts = await _contactService.GetContactsAsync();
             Contacts = Contacts.OrderBy(contact => contact.Name);
             IsBusy = false;
+            IsInitiailized = true;
         }
 
         private void OnContactSelected(ItemTappedEventArgs e)

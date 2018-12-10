@@ -13,13 +13,13 @@ namespace OP.ContactsApp.ViewModels
         private IOPContactService _contactService;
         private INavigationService _navigationService;
 
-        public Contact SelectedConatct { get; set; }
+        public Contact SelectedContact { get; set; }
 
         public ContactDetailViewModel(IOPContactService contactService, INavigationService navigationService)
         {
             _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
-            SelectedConatct = _contactService.SelectedContact;
+            SelectedContact = _contactService.SelectedContact;
         }
     }
 }
