@@ -15,11 +15,16 @@ namespace OP.ContactsApp.ViewModels
 {
     public class ContactsListViewModel : ViewModelBase
     {
-        public IEnumerable<OPContact> Contacts { get; set; }
         public bool IsBusy { get; set; }
         public bool IsInitiailized { get; set; }
+        public string SearchValue { get; set; }
+        public IEnumerable<OPContact> AContacts { get; set; }
+
+        private IEnumerable<OPContact> allContacts;
+        public IEnumerable<OPContact> AllContacts { get => allContacts; set => AContacts = value; }        
 
         public ICommand ContactSelectedCommand { get; private set; }
+        public ICommand SearchCommand { get; private set; }
 
         private IOPContactService _contactService;
         private INavigationService _navigationService;
@@ -31,7 +36,8 @@ namespace OP.ContactsApp.ViewModels
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             _messagingCenter = messagingCenter ?? throw new ArgumentNullException(nameof(messagingCenter));
             ContactSelectedCommand = new Command<ItemTappedEventArgs>(OnContactSelected);
-            _messagingCenter.Subscribe<ContactDetailViewModel, OPContact>(this, "ClearFavorites", (vm, ctc) => Contacts.ToList().ForEach(contact =>
+            SearchCommand = new Command<string>(OnSearch);
+            _messagingCenter.Subscribe<ContactDetailViewModel, OPContact>(this, "ClearFavorites", (vm, ctc) => AllContacts.ToList().ForEach(contact =>
             {
                 if (ctc != contact)
                     contact.Favorite = false;
@@ -40,11 +46,11 @@ namespace OP.ContactsApp.ViewModels
 
         public async Task Initialize()
         {
-            if (Contacts != null && Contacts.Any()) Contacts = SortContacts(Contacts);
+            if (AllContacts != null && AllContacts.Any()) AllContacts = SortContacts(AllContacts);
             if (IsInitiailized) return;
             IsBusy = true;
             var contacts = await _contactService.GetContactsAsync();
-            Contacts = SortContacts(contacts);
+            AllContacts = SortContacts(contacts);
             IsBusy = false;
             IsInitiailized = true;
         }
@@ -57,6 +63,11 @@ namespace OP.ContactsApp.ViewModels
         }
 
         private IEnumerable<OPContact> SortContacts(IEnumerable<OPContact> contacts)
-            => contacts.OrderByDescending(contact => contact.Favorite).ThenBy(contact => contact.Name).ToList();
+            => contacts.Where(contact => contact.Name.Contains(SearchValue)).OrderByDescending(contact => contact.Favorite).ThenBy(contact => contact.Name).ToList();
+
+        private void OnSearch(string searchValue)
+        {
+            var s = 0;
+        }
     }
 }

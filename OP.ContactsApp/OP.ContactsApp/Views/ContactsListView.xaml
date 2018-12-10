@@ -8,10 +8,18 @@
              Title="Contacts">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Text="Here"/>
+
+        <StackLayout>
+            <SearchBar x:Name="SearchBar" Placeholder="John Smith" SearchCommand="{Binding SearchCommand}" SearchCommandParameter="{Binding Text, Source={x:Reference SearchBar}}">
+                <SearchBar.Behaviors>
+                    <common:TextChangedBehavior />
+                </SearchBar.Behaviors>
+            </SearchBar>
+        </StackLayout>
+
         <ListView Grid.Row="1" ItemsSource="{Binding Contacts}">
             <ListView.Behaviors>
                 <common:EventToCommandBehavior EventName="ItemTapped" Command="{Binding ContactSelectedCommand}"/>
