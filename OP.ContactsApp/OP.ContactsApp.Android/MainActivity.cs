@@ -16,6 +16,10 @@ namespace OP.ContactsApp.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            ActivityCompat.RequestPermissions(this, new string[] {
+                Manifest.Permission.ReadContacts,
+            }, 0);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -26,10 +30,7 @@ namespace OP.ContactsApp.Droid
 
         protected override void OnStart()
         {
-            base.OnStart();
-            ActivityCompat.RequestPermissions(this, new string[] {
-                Manifest.Permission.ReadContacts,
-            }, 0);
+            base.OnStart();            
         }
     }
 }

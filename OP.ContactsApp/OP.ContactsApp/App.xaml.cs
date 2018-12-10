@@ -1,4 +1,6 @@
 ﻿using OP.ContactsApp.Views;
+using Plugin.ContactService;
+using SimpleInjector;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -8,26 +10,20 @@ namespace OP.ContactsApp
 {
     public partial class App : Application
     {
+        private readonly Container _container;
+
         public App()
         {
             InitializeComponent();
-
-            MainPage = new ContactsListView();
+            _container = new Container();
+            ConfigurContainer(_container);
+            var mainPage = _container.GetInstance<ContactsListView>();
+            MainPage = mainPage;
         }
 
-        protected override void OnStart()
+        private void ConfigurContainer(Container container)
         {
-            // Handle when your app starts
-        }
-
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
+            container.Register<IContactService>(() => CrossContactService.Current);
         }
     }
 }

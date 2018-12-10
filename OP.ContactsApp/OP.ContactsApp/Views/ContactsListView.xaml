@@ -2,10 +2,27 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:OP.ContactsApp"
-             x:Class="OP.ContactsApp.Views.ContactsListView">
-    <StackLayout>
-        <ListView IsGroupingEnabled="True">
-            
+             x:Class="OP.ContactsApp.Views.ContactsListView"
+             Appearing="ContentPage_Appearing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Text="Here"/>
+        <ListView Grid.Row="1" ItemsSource="{Binding Contacts}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Name}"/>
+                            <Label Text="{Binding Email}"/>
+                            <Label Text="{Binding Number}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
-    </StackLayout>
+        <ActivityIndicator Grid.Row="1" IsRunning="{Binding IsBusy}"/>
+    </Grid>
 </ContentPage>
