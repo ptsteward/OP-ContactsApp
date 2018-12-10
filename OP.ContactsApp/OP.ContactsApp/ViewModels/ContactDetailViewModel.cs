@@ -1,9 +1,11 @@
 ﻿using OP.ContactsApp.Common;
+using OP.ContactsApp.Models;
 using OP.ContactsApp.Services;
 using Plugin.ContactService.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace OP.ContactsApp.ViewModels
 {
@@ -11,15 +13,21 @@ namespace OP.ContactsApp.ViewModels
     {
 
         private IOPContactService _contactService;
-        private INavigationService _navigationService;
+        private IMessagingCenter _messagingCenter;
 
-        public Contact SelectedContact { get; set; }
+        public OPContact SelectedContact { get; set; }      
 
-        public ContactDetailViewModel(IOPContactService contactService, INavigationService navigationService)
+        public ContactDetailViewModel(IOPContactService contactService, IMessagingCenter messagingCenter)
         {
             _contactService = contactService ?? throw new ArgumentNullException(nameof(contactService));
-            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            _messagingCenter = messagingCenter ?? throw new ArgumentNullException(nameof(messagingCenter));
             SelectedContact = _contactService.SelectedContact;
+        }
+
+        public void OnBackButtonPressed()
+        {
+            if (SelectedContact.Favorite)
+                _messagingCenter.Send(this, "ClearFavorites", SelectedContact);
         }
     }
 }

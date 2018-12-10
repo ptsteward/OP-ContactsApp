@@ -25,6 +25,7 @@ namespace OP.ContactsApp
         private void ConfigurContainer(Container container)
         {
             container.Register<INavigationService, NavigationService>();
+            container.Register(() => MessagingCenter.Instance);
             container.RegisterSingleton(() => CrossContactService.Current);            
             container.RegisterSingleton<IOPContactService, OPContactService>();
         }

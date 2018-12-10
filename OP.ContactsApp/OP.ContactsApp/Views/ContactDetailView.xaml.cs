@@ -18,5 +18,12 @@ namespace OP.ContactsApp.Views
             InitializeComponent();
             BindingContext = vm;
         }
+
+        protected override void OnDisappearing()
+        {
+            var context = BindingContext as ContactDetailViewModel;
+            context.OnBackButtonPressed();
+            base.OnDisappearing();
+        }
     }
 }

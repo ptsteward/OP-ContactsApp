@@ -5,10 +5,22 @@
              Title="Contact Detail">
     <ContentPage.Content>
         <StackLayout>
-            <Switch IsToggled="{Binding Favorite}"/>
-            <Label FontSize="Large" FontAttributes="Bold" Text="{Binding SelectedContact.Name}"/>
-            <Label FontSize="Large" FontAttributes="Bold" Text="{Binding SelectedContact.Email}"/>
-            <Label FontSize="Large" FontAttributes="Bold" Text="{Binding SelectedContact.Number}"/>
+            <StackLayout Orientation="Horizontal">
+                <Label FontSize="Large" FontAttributes="Bold" Text="Favorite Contact"/>
+                <Switch IsToggled="{Binding SelectedContact.Favorite}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label FontSize="Large" FontAttributes="Bold" Text="Name:"/>
+                <Label FontSize="Large" Text="{Binding SelectedContact.Name}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label FontSize="Large" FontAttributes="Bold" Text="Email:"/>
+                <Label FontSize="Large" Text="{Binding SelectedContact.Email}"/>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Label FontSize="Large" FontAttributes="Bold" Text="Number:"/>
+                <Label FontSize="Large" Text="{Binding SelectedContact.Number}"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
